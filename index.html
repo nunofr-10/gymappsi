@@ -8,6 +8,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="bySTATS">
 <title>bySTATS</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='64' y2='64' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%230d8c3e'/%3E%3Cstop offset='1' stop-color='%231aa8cc'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='36' font-family='serif'%3E%F0%9F%8F%8B%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='64' y2='64' gradientUnits='userSpaceOnUse'%3E%3Cstop stop-color='%230d8c3e'/%3E%3Cstop offset='1' stop-color='%231aa8cc'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='36' font-family='serif'%3E%F0%9F%8F%8B%EF%B8%8F%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root,[data-theme="verde"]{--bg:#f4f7f5;--bg2:#fff;--bg3:#eaf4ef;--card:#fff;--card2:#f0f9f4;--accent1:#0d8c3e;--accent2:#1dbb58;--accent3:#0d8c3e;--accent4:#1aa8cc;--accent5:#1aa8cc;--accentText:#0b8c72;--text:#0f1f15;--text2:#3d6b50;--text3:#7aaa8a;--border:#d4e8dc;--border2:#b8d9c6;--danger:#c0392b;--r:12px;--rs:8px}
@@ -479,6 +481,22 @@
     line-height: 1;
   }
 
+  /* Custom muscle input */
+  .custom-muscle-input {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--accent1);
+    border-radius: var(--rs);
+    padding: 11px 14px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    outline: none;
+    margin-top: 8px;
+    transition: border-color 0.2s;
+  }
+  .custom-muscle-input:focus { border-color: var(--accent2); }
+
   /* MUSCLE PICKER */
   .muscle-picker-card {
     background: var(--card);
@@ -561,7 +579,6 @@
   .muscle-option.biceps-opt.selected { border-color: #8b5cf6; background: rgba(139,92,246,0.08); }
   .muscle-option-check { font-size: 16px; opacity: 0; transition: opacity 0.15s; }
   .muscle-option.selected .muscle-option-check { opacity: 1; }
-
   .muscle-picker-actions {
     display: none;
     padding: 0 12px 12px;
@@ -609,9 +626,107 @@
   .exercise-card.biceps-card::before {
     background: linear-gradient(180deg, #8b5cf6 0%, #c026d3 100%);
   }
+
+  /* ── SPLASH SCREEN ── */
+  .splash {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .splash-hide {
+    opacity: 0;
+    transform: scale(1.04);
+    pointer-events: none;
+  }
+  .splash-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    animation: splashIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes splashIn {
+    0%  { opacity: 0; transform: scale(0.7) translateY(20px); }
+    100%{ opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .splash-icon {
+    width: 88px; height: 88px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, var(--accent1) 0%, var(--accent4) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 44px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    animation: splashIconPulse 1.8s ease-in-out infinite;
+  }
+  @keyframes splashIconPulse {
+    0%, 100% { box-shadow: 0 12px 40px rgba(0,0,0,0.18); }
+    50%       { box-shadow: 0 16px 52px rgba(0,0,0,0.28); }
+  }
+  .splash-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    letter-spacing: 5px;
+    background: linear-gradient(90deg, var(--accent1) 0%, var(--accent4) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: splashLogo 0.6s 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  @keyframes splashLogo {
+    0%  { opacity: 0; letter-spacing: 16px; }
+    100%{ opacity: 1; letter-spacing: 5px; }
+  }
+  .splash-tagline {
+    font-size: 13px;
+    color: var(--text3);
+    letter-spacing: 1px;
+    font-weight: 500;
+    animation: splashFadeIn 0.5s 0.7s ease both;
+  }
+  @keyframes splashFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .splash-bar {
+    position: absolute;
+    bottom: 60px;
+    width: 120px;
+    height: 3px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .splash-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent1), var(--accent4));
+    border-radius: 99px;
+    animation: splashBarFill 1.8s 0.4s ease-out forwards;
+    width: 0%;
+  }
+  @keyframes splashBarFill {
+    0%  { width: 0%; }
+    100%{ width: 100%; }
+  }
 </style>
 </head>
 <body>
+
+<!-- ── SPLASH SCREEN ── -->
+<div id="splashScreen" class="splash">
+  <div class="splash-content">
+    <div class="splash-icon">🏋️</div>
+    <div class="splash-logo">bySTATS</div>
+    <div class="splash-tagline">Tu entrenamiento, tus stats</div>
+  </div>
+  <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+</div>
 
 <header class="app-header">
   <div class="logo">
@@ -704,11 +819,13 @@
     </div>
     <div class="form-group">
       <label class="form-label">Grupo muscular</label>
-      <select class="form-input" id="exMuscle">
+      <select class="form-input" id="exMuscle" onchange="handleMuscleSelectChange(this.value)">
         <option value="">Seleccionar...</option>
         <option>Pecho</option><option>Espalda</option><option>Hombro</option>
-        <option>Bíceps</option><option>Trapecio</option><option>Pierna</option>
+        <option>Bíceps</option><option>Tríceps</option><option>Trapecio</option><option>Pierna</option>
+        <option value="__custom__">✏️ Personalizado...</option>
       </select>
+      <input class="custom-muscle-input" id="exMuscleCustom" placeholder="Escribe el grupo muscular..." style="display:none;" oninput="syncCustomMuscle(this.value)">
     </div>
     <div class="form-group">
       <label class="form-label">Notas (opcional)</label>
@@ -875,6 +992,12 @@ function defaultExercises() {
       { id:'ex_vie_3', name:'Remo en Polea',              muscle:'Espalda',  notes:'', series:2 },
       { id:'ex_vie_4', name:'Laterales de Hombro',        muscle:'Hombro',   notes:'', series:2 },
       { id:'ex_vie_5', name:'Posterior de Hombro',        muscle:'Hombro',   notes:'', series:2 },
+      { id:'ex_vie_6', name:'Bíceps Sentado',             muscle:'Bíceps',   notes:'', series:3 },
+      { id:'ex_vie_7', name:'Bíceps Martillo',            muscle:'Bíceps',   notes:'', series:3 },
+      { id:'ex_vie_8', name:'Concentrado de Bíceps',      muscle:'Bíceps',   notes:'', series:3 },
+      { id:'ex_vie_9', name:'Extensiones de Tríceps',     muscle:'Tríceps',  notes:'', series:3 },
+      { id:'ex_vie_10', name:'Tríceps Trasnuca',          muscle:'Tríceps',  notes:'', series:3 },
+      { id:'ex_vie_11', name:'Fondos de Tríceps',         muscle:'Tríceps',  notes:'', series:3 },
     ],
   };
 }
@@ -979,20 +1102,48 @@ function renderExercises() {
   renderMusclePickers();
 }
 
-// ---- MUSCLE PICKERS (todos los días menos miércoles) ----
-const MUSCLE_PICKER_EXCLUDE = 'mie'; // Miércoles = excluido
+function handleMuscleSelectChange(val) {
+  const customInput = document.getElementById('exMuscleCustom');
+  if (val === '__custom__') {
+    customInput.style.display = 'block';
+    customInput.focus();
+  } else {
+    customInput.style.display = 'none';
+    customInput.value = '';
+  }
+}
+
+function syncCustomMuscle(val) {
+  // just keeps input value live — read in saveExercise
+}
+
+function getSelectedMuscle() {
+  const sel = document.getElementById('exMuscle').value;
+  if (sel === '__custom__') {
+    return document.getElementById('exMuscleCustom').value.trim();
+  }
+  return sel;
+}
+
+// ---- MUSCLE PICKERS (excluir miércoles y días personalizados) ----
 
 const TRICEPS_OPTIONS = ['Extensiones de Tríceps', 'Tríceps Trasnuca', 'Fondos de Tríceps'];
 const BICEPS_OPTIONS  = ['Bíceps Sentado', 'Bíceps Martillo', 'Concentrado de Bíceps'];
 
-// Temporary selection state for pickers
 let pickerState = { triceps: null, biceps: null };
+
+function isPickerDay() {
+  // Show pickers only on fixed days (lun/mar/mie/jue/vie/sab/dom), not miércoles, not custom (day_...)
+  if (state.currentDay === 'mie') return false;
+  if (state.currentDay && state.currentDay.startsWith('day_')) return false;
+  return true;
+}
 
 function renderMusclePickers() {
   const area = document.getElementById('musclePickersArea');
   if (!area) return;
 
-  if (state.currentDay === MUSCLE_PICKER_EXCLUDE) {
+  if (!isPickerDay()) {
     area.innerHTML = '';
     return;
   }
@@ -1023,14 +1174,14 @@ function renderPickerCard(type) {
 
   const optionsHTML = options.map(o => `
     <div class="muscle-option ${optCls}${selected === o ? ' selected' : ''}"
-         onclick="selectMuscleOption('${type}','${o}')">
+         onclick="selectMuscleOption('${type}','${o.replace(/'/g,"\\'")}')">
       ${o}
       <span class="muscle-option-check">${isBiceps ? '💜' : '🔥'}</span>
     </div>
   `).join('');
 
   return `
-    <div class="muscle-picker-card${selected !== null && document.querySelector('.muscle-picker-card') ? '' : ''}" id="pickerCard-${type}">
+    <div class="muscle-picker-card" id="pickerCard-${type}">
       <div class="muscle-picker-header ${headerCls}" onclick="togglePicker('${type}')">
         <div class="muscle-picker-label">
           ${emoji} ${label}
@@ -1060,7 +1211,6 @@ function togglePicker(type) {
 function selectMuscleOption(type, value) {
   pickerState[type] = value;
   renderMusclePickers();
-  // Re-expand the card after re-render
   const card = document.getElementById('pickerCard-' + type);
   if (card) card.classList.add('expanded');
 }
@@ -1075,24 +1225,11 @@ function clearMuscleSelection(type) {
 function confirmMuscleExercise(type) {
   const selected = pickerState[type];
   if (!selected) { showToast('Elige una opción primero'); return; }
-
   const muscleLabel = type === 'biceps' ? 'Bíceps' : 'Tríceps';
   const id = 'ex_' + type + '_' + Date.now();
-
   if (!state.exercises[state.currentDay]) state.exercises[state.currentDay] = [];
-
-  // Avoid duplicates: remove existing exercise of same muscleVariant
   state.exercises[state.currentDay] = state.exercises[state.currentDay].filter(e => e.muscleVariant !== type);
-
-  state.exercises[state.currentDay].push({
-    id,
-    name: selected,
-    muscle: muscleLabel,
-    notes: '',
-    muscleVariant: type,   // flag to color the sidebar bar differently
-    series: 3
-  });
-
+  state.exercises[state.currentDay].push({ id, name: selected, muscle: muscleLabel, notes: '', muscleVariant: type, series: 3 });
   pickerState[type] = null;
   save();
   renderExercises();
@@ -1197,6 +1334,8 @@ function openAddExercise() {
   document.getElementById('addExTitle').textContent = 'Nuevo ejercicio';
   document.getElementById('exName').value = '';
   document.getElementById('exMuscle').value = '';
+  document.getElementById('exMuscleCustom').value = '';
+  document.getElementById('exMuscleCustom').style.display = 'none';
   document.getElementById('exNotes').value = '';
   selectSeries(3);
   document.getElementById('addExOverlay').classList.add('open');
@@ -1209,7 +1348,22 @@ function openEditExercise() {
   state.editMode = true;
   document.getElementById('addExTitle').textContent = 'Editar ejercicio';
   document.getElementById('exName').value = ex.name;
-  document.getElementById('exMuscle').value = ex.muscle || '';
+
+  // Restore muscle selection — check if value exists in select options
+  const sel = document.getElementById('exMuscle');
+  const customInput = document.getElementById('exMuscleCustom');
+  const muscle = ex.muscle || '';
+  const knownValues = ['', 'Pecho', 'Espalda', 'Hombro', 'Bíceps', 'Tríceps', 'Trapecio', 'Pierna'];
+  if (knownValues.includes(muscle)) {
+    sel.value = muscle;
+    customInput.style.display = 'none';
+    customInput.value = '';
+  } else {
+    sel.value = '__custom__';
+    customInput.style.display = 'block';
+    customInput.value = muscle;
+  }
+
   document.getElementById('exNotes').value = ex.notes || '';
   selectSeries(ex.series || 3);
   closeModal('detailOverlay');
@@ -1219,7 +1373,7 @@ function openEditExercise() {
 function saveExercise() {
   const name = document.getElementById('exName').value.trim();
   if (!name) { showToast('Escribe el nombre'); return; }
-  const muscle = document.getElementById('exMuscle').value;
+  const muscle = getSelectedMuscle();
   const notes = document.getElementById('exNotes').value.trim();
   const series = parseInt(document.querySelector('.series-btn.active')?.textContent || '3');
 
@@ -1532,6 +1686,17 @@ function setHeaderDate() {
 // Apply saved theme
 const savedTheme = localStorage.getItem(THEME_KEY) || 'verde';
 document.body.setAttribute('data-theme', savedTheme);
+
+// ── SPLASH SCREEN ──────────────────────────────────────────
+(function() {
+  const splash = document.getElementById('splashScreen');
+  if (!splash) return;
+  splash.setAttribute('data-theme', savedTheme);
+  setTimeout(() => {
+    splash.classList.add('splash-hide');
+    setTimeout(() => { splash.style.display = 'none'; }, 600);
+  }, 2000);
+})();
 
 // Auto-select today if present
 load();
